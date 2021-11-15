@@ -76,12 +76,10 @@ class HomePageViewModel @Inject constructor(
                         )
                     }
                     is Resource.Error -> {
-                        _states.value = resource.data?.let {
-                            states.value.copy(
-                                error = it.message,
-                                isLoadingRandom = false
-                            )
-                        }!!
+                        _states.value = states.value.copy(
+                            error = resource.message.toString(),
+                            isLoadingRow3 = false
+                        )
                     }
                 }
             }.launchIn(viewModelScope)
@@ -93,7 +91,7 @@ class HomePageViewModel @Inject constructor(
                 when (resource) {
                     is Resource.Success -> {
                         _states.value = states.value.copy(
-                            genreRow1 = resource.data?.data?.let {
+                            genreRow1 = resource.data?.data?.documents?.let {
                                 it.map { Document ->
                                     Document.toAnimeModal()
                                 }
@@ -107,12 +105,10 @@ class HomePageViewModel @Inject constructor(
                         )
                     }
                     is Resource.Error -> {
-                        _states.value = resource.data?.let {
-                            states.value.copy(
-                                error = it.message,
-                                isLoadingRow1 = false
-                            )
-                        }!!
+                        _states.value = states.value.copy(
+                            error = resource.message.toString(),
+                            isLoadingRow3 = false
+                        )
                     }
                 }
             }.launchIn(viewModelScope)
@@ -123,7 +119,7 @@ class HomePageViewModel @Inject constructor(
                 when (resource) {
                     is Resource.Success -> {
                         _states.value = states.value.copy(
-                            genreRow2 = resource.data?.data?.let {
+                            genreRow2 = resource.data?.data?.documents?.let {
                                 it.map { Document ->
                                     Document.toAnimeModal()
                                 }
@@ -137,12 +133,10 @@ class HomePageViewModel @Inject constructor(
                         )
                     }
                     is Resource.Error -> {
-                        _states.value = resource.data?.let {
-                            states.value.copy(
-                                error = it.message,
-                                isLoadingRow2 = false
-                            )
-                        }!!
+                        _states.value = states.value.copy(
+                            error = resource.message.toString(),
+                            isLoadingRow3 = false
+                        )
                     }
                 }
             }.launchIn(viewModelScope)
@@ -153,7 +147,7 @@ class HomePageViewModel @Inject constructor(
                 when (resource) {
                     is Resource.Success -> {
                         _states.value = states.value.copy(
-                            genreRow3 = resource.data?.data?.let {
+                            genreRow3 = resource.data?.data?.documents?.let {
                                 it.map { Document ->
                                     Document.toAnimeModal()
                                 }
@@ -167,12 +161,10 @@ class HomePageViewModel @Inject constructor(
                         )
                     }
                     is Resource.Error -> {
-                        _states.value = resource.data?.let {
-                            states.value.copy(
-                                error = it.message,
-                                isLoadingRow3 = false
-                            )
-                        }!!
+                        _states.value = states.value.copy(
+                            error = resource.message.toString(),
+                            isLoadingRow3 = false
+                        )
                     }
                 }
             }.launchIn(viewModelScope)

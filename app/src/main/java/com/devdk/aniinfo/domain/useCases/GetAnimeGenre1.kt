@@ -12,17 +12,17 @@ import java.io.IOException
 class GetAnimeGenre1(
     private val repository : AnimeRepository
 ) {
-     operator fun invoke (genre : String) : Flow<Resource<RandomAnimeDTO>> = flow{
+     operator fun invoke (genre : String) : Flow<Resource<AnimeListDTO>> = flow{
         try {
-            emit(Resource.Loading<RandomAnimeDTO>())
-            val dto : RandomAnimeDTO = repository.getAnimeForGenreRow1(genre)
-            emit(Resource.Success<RandomAnimeDTO>(dto))
+            emit(Resource.Loading<AnimeListDTO>())
+            val dto : AnimeListDTO = repository.getAnimeForGenreRow1(genre)
+            emit(Resource.Success<AnimeListDTO>(dto))
         }
         catch (e : HttpException){
-            emit(Resource.Error<RandomAnimeDTO>("Something went wrong"))
+            emit(Resource.Error<AnimeListDTO>(e.localizedMessage ?: "Check Your Internet Connection " ))
         }
         catch (e : IOException){
-            emit(Resource.Error<RandomAnimeDTO>("Something went wrong"))
+            emit(Resource.Error<AnimeListDTO>("Something went wrong"))
         }
     }
 }

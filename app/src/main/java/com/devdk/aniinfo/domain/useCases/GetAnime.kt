@@ -20,7 +20,7 @@ class GetAnime(
             emit(Resource.Success<RandomAnimeDTO>(dto))
         }
         catch (e : HttpException){
-            emit(Resource.Error<RandomAnimeDTO>("Something went wrong"))
+            emit(Resource.Error<RandomAnimeDTO>(e.localizedMessage ?: "Check Your Internet Connection " ))
         }
         catch (e : IOException){
             emit(Resource.Error<RandomAnimeDTO>("Something went wrong"))

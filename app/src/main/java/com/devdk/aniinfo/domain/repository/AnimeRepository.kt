@@ -8,11 +8,11 @@ interface AnimeRepository {
 
     suspend fun getRandomAnimeList() : RandomAnimeDTO
 
-    suspend fun getAnimeForGenreRow1(genre : String) : RandomAnimeDTO
+    suspend fun getAnimeForGenreRow1(genre : String) : AnimeListDTO
 
-    suspend fun getAnimeForGenreRow2(genre : String) : RandomAnimeDTO
+    suspend fun getAnimeForGenreRow2(genre : String) : AnimeListDTO
 
-    suspend fun getAnimeForGenreRow3(genre : String) : RandomAnimeDTO
+    suspend fun getAnimeForGenreRow3(genre : String) : AnimeListDTO
 
     suspend fun getAimeFromId(id : Int) : AnimeDTO
 

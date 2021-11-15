@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -34,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.devdk.aniinfo.R
+import com.devdk.aniinfo.common.QueryParams
 import com.devdk.aniinfo.common.Size
 import com.devdk.aniinfo.presentation.detail_page.components.GenreTag
 import com.devdk.aniinfo.presentation.component.AnimeCard
@@ -51,6 +51,12 @@ fun DetailPage(
 ) {
    val state = detailViewModel.states.value
     val context = LocalContext.current
+
+    if (state.error.isNotEmpty()){
+        Box(modifier = Modifier.fillMaxSize()){
+            Text(text = state.error , color = Color.Red)
+        }
+    }
     BoxWithConstraints(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colors.background),
@@ -112,28 +118,24 @@ fun DetailPage(
                                         .size(50.dp)
                                         .clip(CircleShape),
                                     painter = painterResource(id = R.drawable.download),
-                                    contentDescription = stringResource(
-                                        id = R.string.YOUTUBE_ICON
-                                    ),
+                                    contentDescription = "",
                                     contentScale = ContentScale.Crop
                                 )
-                                Column(Modifier.shimmer()) {
-                                    Text(
-                                        text = "",
-                                        modifier = Modifier
-                                            .background(Color.Black)
-                                            .fillMaxWidth(0.8f)
-                                    )
-                                    Text(
-                                        text = "",
-                                        modifier = Modifier
-                                            .background(Color.Black)
-                                            .fillMaxWidth(0.8f)
-                                    )
-                                }
-
                             }
-
+                            Column(Modifier.shimmer().fillMaxWidth() , horizontalAlignment = Alignment.Start) {
+                                Text(
+                                    text = "",
+                                    modifier = Modifier
+                                        .background(Color.Black)
+                                        .fillMaxWidth(0.8f)
+                                )
+                                Text(
+                                    text = "",
+                                    modifier = Modifier
+                                        .background(Color.Black)
+                                        .fillMaxWidth(0.8f)
+                                )
+                            }
                             Spacer(modifier = Modifier.height(Size.large))
                             Text(text = "",
                                 lineHeight = 50.sp,
@@ -157,7 +159,7 @@ fun DetailPage(
                                     fontSize = 30.sp,
                                     color = MaterialTheme.colors.onBackground,
                                     textAlign = TextAlign.Start,
-                                    modifier = Modifier.fillMaxWidth(0.8f)
+                                    modifier = Modifier.fillMaxWidth(0.7f)
                                 )
                                 if (state.trailerURL != null){
                                     Image(
@@ -211,7 +213,7 @@ fun DetailPage(
                         Spacer(modifier = Modifier.height(Size.large))
                         LazyRow{
                             if (homePageViewModel.states.value.isLoadingRandom){
-                                items(10){
+                                items(QueryParams.ROW_PAGE_SIZE){
                                     Box(modifier = Modifier.shimmer()){
                                         AnimeCard(
                                             painter = rememberImagePainter(R.drawable.download),
@@ -240,11 +242,6 @@ fun DetailPage(
                     }
                 }
             }
-    }
-    if (state.error.isNotEmpty()){
-        Box(modifier = Modifier.fillMaxSize()){
-            Text(text = state.error , color = Color.Red)
-        }
     }
     IconButton(onClick = {
         navController.navigateUp()

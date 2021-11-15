@@ -52,12 +52,10 @@ class DetailPageViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    _states.value = resource.data?.let {
-                        states.value.copy(
-                            error = it.message,
-                            isLoading = false
-                        )
-                    }!!
+                    _states.value = states.value.copy(
+                        error = resource.message.toString(),
+                        isLoading = false
+                    )
                 }
             }
         }.launchIn(viewModelScope)

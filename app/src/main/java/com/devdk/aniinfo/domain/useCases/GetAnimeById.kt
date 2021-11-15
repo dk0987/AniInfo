@@ -17,7 +17,7 @@ class GetAnimeById (
                 val dto: AnimeDTO = repository.getAimeFromId(id)
                 emit(Resource.Success<AnimeDTO>(dto))
             } catch (e: HttpException) {
-                emit(Resource.Error<AnimeDTO>("Something went wrong"))
+                emit(Resource.Error<AnimeDTO>(e.localizedMessage ?: "Check Your Internet Connection " ))
             } catch (e: IOException) {
                 emit(Resource.Error<AnimeDTO>("Something went wrong"))
             }

@@ -30,6 +30,7 @@ import com.devdk.aniinfo.presentation.component.AnimeCard
 import com.devdk.aniinfo.presentation.home_page.components.Buttons
 import com.devdk.aniinfo.presentation.util.Routes
 import com.devdk.aniinfo.common.Genres
+import com.devdk.aniinfo.common.QueryParams
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -46,6 +47,7 @@ fun HomePage(
 
     val state = viewModel.states.value
     val pagerState = rememberPagerState()
+
     Box(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colors.background)
@@ -164,7 +166,7 @@ fun HomePage(
                     }
                     LazyRow{
                         if (state.isLoadingRow1){
-                            items(20){
+                            items(QueryParams.ROW_PAGE_SIZE){
                                 Box(modifier = Modifier.shimmer()){
                                     AnimeCard(
                                         painter = rememberImagePainter(R.drawable.download),
@@ -202,7 +204,7 @@ fun HomePage(
                     }
                     LazyRow{
                         if (state.isLoadingRow2){
-                            items(20){
+                            items(QueryParams.ROW_PAGE_SIZE){
                                 Box(modifier = Modifier.shimmer()){
                                     AnimeCard(
                                         painter = rememberImagePainter(R.drawable.download),
@@ -239,7 +241,7 @@ fun HomePage(
                     }
                     LazyRow{
                         if (state.isLoadingRow3){
-                            items(20){
+                            items(QueryParams.ROW_PAGE_SIZE){
                                 Box(modifier = Modifier.shimmer()){
                                     AnimeCard(
                                         painter = rememberImagePainter(R.drawable.download),
@@ -271,7 +273,12 @@ fun HomePage(
 
     }
     if (state.error.isNotEmpty()){
-        Box(modifier = Modifier.fillMaxSize()){
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background),
+            contentAlignment = Alignment.Center
+        ){
             Text(text = state.error , color = Color.Red)
         }
     }

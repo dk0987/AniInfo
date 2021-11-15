@@ -13,15 +13,15 @@ class AnimeRepositoryImpl(
        return api.getRandomAnimeList()
     }
 
-    override suspend fun getAnimeForGenreRow1(genre: String): RandomAnimeDTO{
+    override suspend fun getAnimeForGenreRow1(genre: String): AnimeListDTO{
         return api.getAnimeForGenreRow1(genre)
     }
 
-    override suspend fun getAnimeForGenreRow2(genre: String): RandomAnimeDTO {
+    override suspend fun getAnimeForGenreRow2(genre: String): AnimeListDTO {
         return api.getAnimeForGenreRow2(genre)
     }
 
-    override suspend fun getAnimeForGenreRow3(genre: String): RandomAnimeDTO{
+    override suspend fun getAnimeForGenreRow3(genre: String): AnimeListDTO{
         return api.getAnimeForGenreRow3(genre)
     }
 
