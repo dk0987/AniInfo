@@ -106,7 +106,7 @@ fun HomePage(
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 item {
-                    if (state.isLoadingRandom){
+                    if (state.isLoadingRandom || state.error.isNotEmpty()){
                         Box(modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight(0.35f)
@@ -165,7 +165,7 @@ fun HomePage(
                         }
                     }
                     LazyRow{
-                        if (state.isLoadingRow1){
+                        if (state.isLoadingRow1 || state.error.isNotEmpty()){
                             items(QueryParams.ROW_PAGE_SIZE){
                                 Box(modifier = Modifier.shimmer()){
                                     AnimeCard(
@@ -203,7 +203,7 @@ fun HomePage(
                         }
                     }
                     LazyRow{
-                        if (state.isLoadingRow2){
+                        if (state.isLoadingRow2 || state.error.isNotEmpty()){
                             items(QueryParams.ROW_PAGE_SIZE){
                                 Box(modifier = Modifier.shimmer()){
                                     AnimeCard(
@@ -240,7 +240,7 @@ fun HomePage(
                         }
                     }
                     LazyRow{
-                        if (state.isLoadingRow3){
+                        if (state.isLoadingRow3 || state.error.isNotEmpty()){
                             items(QueryParams.ROW_PAGE_SIZE){
                                 Box(modifier = Modifier.shimmer()){
                                     AnimeCard(
@@ -272,14 +272,5 @@ fun HomePage(
         }
 
     }
-    if (state.error.isNotEmpty()){
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-            contentAlignment = Alignment.Center
-        ){
-            Text(text = state.error , color = Color.Red)
-        }
-    }
+
 }

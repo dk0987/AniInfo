@@ -51,12 +51,6 @@ fun DetailPage(
 ) {
    val state = detailViewModel.states.value
     val context = LocalContext.current
-
-    if (state.error.isNotEmpty()){
-        Box(modifier = Modifier.fillMaxSize()){
-            Text(text = state.error , color = Color.Red)
-        }
-    }
     BoxWithConstraints(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colors.background),
@@ -98,7 +92,7 @@ fun DetailPage(
                 verticalArrangement = Arrangement.Bottom
             ){
                     item {
-                        if (state.isLoading){
+                        if (state.isLoading || state.error.isNotEmpty()){
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -123,27 +117,28 @@ fun DetailPage(
                                 )
                             }
                             Column(Modifier.shimmer().fillMaxWidth() , horizontalAlignment = Alignment.Start) {
+                                Spacer(modifier = Modifier.height(5.dp).fillMaxWidth())
                                 Text(
                                     text = "",
                                     modifier = Modifier
                                         .background(Color.Black)
-                                        .fillMaxWidth(0.8f)
+                                        .fillMaxWidth()
                                 )
                                 Text(
                                     text = "",
                                     modifier = Modifier
                                         .background(Color.Black)
                                         .fillMaxWidth(0.8f)
+                                )
+                                Spacer(modifier = Modifier.height(Size.large))
+                                Text(
+                                    text = "",
+                                    lineHeight = 50.sp,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(Color.Black)
                                 )
                             }
-                            Spacer(modifier = Modifier.height(Size.large))
-                            Text(text = "",
-                                lineHeight = 50.sp,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(Color.Black)
-                                    .shimmer()
-                            )
                             Spacer(modifier = Modifier.height(Size.large))
                         }
                         else{
@@ -212,7 +207,7 @@ fun DetailPage(
                         }
                         Spacer(modifier = Modifier.height(Size.large))
                         LazyRow{
-                            if (homePageViewModel.states.value.isLoadingRandom){
+                            if (homePageViewModel.states.value.isLoadingRandom || state.error.isNotEmpty()){
                                 items(QueryParams.ROW_PAGE_SIZE){
                                     Box(modifier = Modifier.shimmer()){
                                         AnimeCard(

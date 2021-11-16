@@ -2,7 +2,6 @@ package com.devdk.aniinfo.domain.useCases
 
 import com.devdk.aniinfo.common.Resource
 import com.devdk.aniinfo.data.remote.dto.animeListDTO.AnimeListDTO
-import com.devdk.aniinfo.data.remote.dto.randomAnimeDTO.RandomAnimeDTO
 import com.devdk.aniinfo.domain.repository.AnimeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
