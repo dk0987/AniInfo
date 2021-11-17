@@ -128,7 +128,7 @@ fun DetailPage(
                                     text = "",
                                     modifier = Modifier
                                         .background(Color.Black)
-                                        .fillMaxWidth(0.8f)
+                                        .fillMaxWidth()
                                 )
                                 Spacer(modifier = Modifier.height(Size.large))
                                 Text(
