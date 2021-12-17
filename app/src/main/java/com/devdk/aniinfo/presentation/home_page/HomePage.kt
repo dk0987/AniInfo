@@ -1,18 +1,21 @@
 package com.devdk.aniinfo.presentation.home_page
 
+import android.content.SharedPreferences
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement.End
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -42,21 +45,33 @@ import com.valentinilk.shimmer.shimmer
 @Composable
 fun HomePage(
     navController: NavController,
-    viewModel: HomePageViewModel = hiltViewModel()
+    viewModel: HomePageViewModel = hiltViewModel(),
+    sharedPreferences: SharedPreferences
 ) {
 
     val state = viewModel.states.value
     val pagerState = rememberPagerState()
+    val color = sharedPreferences.getLong("background" , MaterialTheme.colors.background.value.toLong()).toULong()
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(MaterialTheme.colors.background)
+        .background(Color(color))
     ){
+        IconButton(onClick = {
+            navController.navigate(Routes.ChooseBackground.screen)
+        },
+            modifier = Modifier.align(Alignment.TopEnd)
+        ) {
+            Icon(imageVector = Icons.Default.Settings, contentDescription = stringResource(
+                id = R.string.setting
+            ),
+                tint = MaterialTheme.colors.onBackground
+            )
+        }
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
                 buildAnnotatedString {
                     withStyle(
@@ -102,6 +117,7 @@ fun HomePage(
                 ,
                 letterSpacing = 5.sp,
             )
+
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally
             ){

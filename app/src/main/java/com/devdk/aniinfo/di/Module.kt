@@ -1,5 +1,9 @@
 package com.devdk.aniinfo.di
 
+import android.app.Application
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import com.devdk.aniinfo.common.Constants
 import com.devdk.aniinfo.data.remote.AnimeAPI
 import com.devdk.aniinfo.data.repository.AnimeRepositoryImpl
@@ -8,6 +12,7 @@ import com.devdk.aniinfo.domain.useCases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -57,6 +62,12 @@ object Module {
     @Singleton
     fun provideUseCases5(repository: AnimeRepository) : GetAnimeById{
         return GetAnimeById(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPref(app : Application) : SharedPreferences {
+        return app.getSharedPreferences("Anime App" , MODE_PRIVATE)
     }
 
 }
