@@ -42,7 +42,8 @@ class DetailPageViewModel @Inject constructor(
                             seasonYear = it.season_year,
                             score = it.score,
                             genre = it.genres,
-                            isLoading = false
+                            isLoading = false,
+                            bannerImageUrl = it.banner_image
                         )
                     }
                 }

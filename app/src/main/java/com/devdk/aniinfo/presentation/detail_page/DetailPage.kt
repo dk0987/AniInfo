@@ -1,6 +1,7 @@
 package com.devdk.aniinfo.presentation.detail_page
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,7 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
@@ -38,6 +39,7 @@ import com.devdk.aniinfo.common.Size
 import com.devdk.aniinfo.presentation.detail_page.components.GenreTag
 import com.devdk.aniinfo.presentation.component.AnimeCard
 import com.devdk.aniinfo.presentation.home_page.HomePageViewModel
+import com.devdk.aniinfo.presentation.ui.theme.background
 import com.devdk.aniinfo.presentation.util.Routes
 import com.google.accompanist.flowlayout.FlowRow
 import com.valentinilk.shimmer.shimmer
@@ -47,13 +49,19 @@ import com.valentinilk.shimmer.shimmer
 fun DetailPage(
     navController: NavController,
     detailViewModel: DetailPageViewModel = hiltViewModel(),
-    homePageViewModel: HomePageViewModel = hiltViewModel()
+    homePageViewModel: HomePageViewModel = hiltViewModel(),
+    sharedPreferences : SharedPreferences
 ) {
+
+    val backgroundColor by remember {
+        mutableStateOf(sharedPreferences.getLong("background" , background.value.toLong()).toULong())
+    }
+
    val state = detailViewModel.states.value
     val context = LocalContext.current
     BoxWithConstraints(modifier = Modifier
         .fillMaxSize()
-        .background(MaterialTheme.colors.background),
+        .background(color = Color(backgroundColor)),
     ){
 
         Box(modifier = Modifier
@@ -61,17 +69,17 @@ fun DetailPage(
             .fillMaxHeight(0.6f)
         ){
             Image(
-                painter = rememberImagePainter(data = state.imageURL),
+                painter = rememberImagePainter(data = state.imageURL ),
                 contentDescription = "",
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillWidth,
             )
             Box(modifier = Modifier
                 .fillMaxSize()
                 .background(
                     brush = Brush.verticalGradient(
                         listOf(
-                            Color.Transparent, MaterialTheme.colors.background
+                            Color.Transparent, Color(backgroundColor)
                         ),
                         startY = 40f
                     )

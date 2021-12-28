@@ -21,20 +21,8 @@ interface AnimeAPI {
         @Query("per_page")page : Int = QueryParams.ROW_PAGE_SIZE
     ) : AnimeListDTO
 
-    @GET("anime")
-    suspend fun getAnimeForGenreRow2(
-        @Query("genres") genre : String ,
-        @Query("per_page")page : Int = QueryParams.ROW_PAGE_SIZE
-    ) : AnimeListDTO
-
-    @GET("anime")
-    suspend fun getAnimeForGenreRow3(
-        @Query("genres") genre : String ,
-        @Query("per_page")page : Int = QueryParams.ROW_PAGE_SIZE
-    ) : AnimeListDTO
-
     @GET("anime/{id}")
-    suspend fun getAimeFromId(
+    suspend fun getAnimeFromId(
         @Path("id") id : Int
     ) : AnimeDTO
 

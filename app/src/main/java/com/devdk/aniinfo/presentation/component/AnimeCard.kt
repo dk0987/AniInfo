@@ -29,6 +29,7 @@ fun AnimeCard(
     elevation : Dp = 10.dp,
     title : String = "",
     Onclick : () -> Unit  = {},
+    isBanner : Boolean = true
 ) {
     Card(
         onClick = Onclick ,
@@ -40,10 +41,23 @@ fun AnimeCard(
             .padding(10.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()){
+            if (!isBanner){
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                ){
+                    Image(
+                        painter = painter,
+                        contentDescription = "Banner",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize(),
+                        alpha = 0.5f
+                    )
+                }
+            }
             Image(
                 painter = painter,
                 contentDescription = "Anime",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier.fillMaxSize()
             )
             Text(

@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.*
@@ -22,6 +23,7 @@ import androidx.navigation.NavController
 import com.devdk.aniinfo.R
 import com.devdk.aniinfo.common.Backgrounds
 import com.devdk.aniinfo.presentation.choose_background.component.ChooseBackgroundCard
+import com.devdk.aniinfo.presentation.ui.theme.background
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -32,7 +34,7 @@ fun ChooseBackground(
 ) {
 
     var backgroundColor by remember {
-        mutableStateOf(sharedPreferences.getLong("background" , 0).toULong())
+        mutableStateOf(sharedPreferences.getLong("background" , background.value.toLong()).toULong())
     }
 
    Column(modifier = Modifier
@@ -50,7 +52,8 @@ fun ChooseBackground(
            IconButton(onClick = { navController.navigateUp() } , modifier = Modifier.size(25.dp)) {
                Icon(
                    imageVector = Icons.Default.KeyboardArrowLeft,
-                   contentDescription = stringResource(id = R.string.back)
+                   contentDescription = stringResource(id = R.string.back),
+                   tint = MaterialTheme.colors.onBackground
                )
            }
 

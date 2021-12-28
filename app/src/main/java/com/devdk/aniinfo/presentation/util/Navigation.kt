@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.devdk.aniinfo.presentation.choose_background.ChooseBackground
 import com.devdk.aniinfo.presentation.detail_page.DetailPage
 import com.devdk.aniinfo.presentation.home_page.HomePage
+import com.devdk.aniinfo.presentation.recommended_page.RecommendedScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalFoundationApi
@@ -37,10 +38,13 @@ fun Navigation(
                  defaultValue = -1
              }
              )){
-             DetailPage(navController = navController)
+             DetailPage(navController = navController , sharedPreferences = sharedPreferences)
          }
          composable(Routes.ChooseBackground.screen) {
             ChooseBackground(navController = navController, sharedPreferences = sharedPreferences)
+         }
+         composable(Routes.Recommended.screen) {
+             RecommendedScreen(navController = navController, sharedPreferences = sharedPreferences)
          }
      }
 }

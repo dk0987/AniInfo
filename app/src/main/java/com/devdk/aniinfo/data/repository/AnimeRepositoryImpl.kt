@@ -9,23 +9,15 @@ import com.devdk.aniinfo.domain.repository.AnimeRepository
 class AnimeRepositoryImpl(
     private val api :AnimeAPI
 ) : AnimeRepository {
-    override suspend fun getRandomAnimeList(): RandomAnimeDTO{
-       return api.getRandomAnimeList()
+    override suspend fun getRandomAnimeList(page : Int): RandomAnimeDTO{
+       return api.getRandomAnimeList(page)
     }
 
-    override suspend fun getAnimeForGenreRow1(genre: String): AnimeListDTO{
+    override suspend fun getAnimeForGenre(genre: String): AnimeListDTO{
         return api.getAnimeForGenreRow1(genre)
     }
 
-    override suspend fun getAnimeForGenreRow2(genre: String): AnimeListDTO {
-        return api.getAnimeForGenreRow2(genre)
-    }
-
-    override suspend fun getAnimeForGenreRow3(genre: String): AnimeListDTO{
-        return api.getAnimeForGenreRow3(genre)
-    }
-
     override suspend fun getAimeFromId(id: Int): AnimeDTO {
-       return api.getAimeFromId(id)
+       return api.getAnimeFromId(id)
     }
 }

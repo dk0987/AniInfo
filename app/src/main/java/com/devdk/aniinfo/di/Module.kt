@@ -48,16 +48,7 @@ object Module {
     fun provideUseCases2(repository: AnimeRepository) : GetAnimeGenre1 {
         return GetAnimeGenre1(repository)
     }
-    @Provides
-    @Singleton
-    fun provideUseCases3(repository: AnimeRepository) : GetAnimeGenre2 {
-        return GetAnimeGenre2(repository)
-    }
-    @Provides
-    @Singleton
-    fun provideUseCases4(repository: AnimeRepository) : GetAnimeGenre3{
-        return GetAnimeGenre3(repository)
-    }
+
     @Provides
     @Singleton
     fun provideUseCases5(repository: AnimeRepository) : GetAnimeById{

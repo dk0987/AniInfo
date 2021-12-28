@@ -9,5 +9,6 @@ data class States(
     val score : Int  = 0,
     val genre : List<String> = emptyList(),
     val isLoading : Boolean = false ,
-    val error : String = ""
+    val error : String = "",
+    val bannerImageUrl : String? = null
 )

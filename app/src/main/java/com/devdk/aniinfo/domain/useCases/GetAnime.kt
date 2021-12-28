@@ -1,5 +1,6 @@
 package com.devdk.aniinfo.domain.useCases
 
+import com.devdk.aniinfo.common.QueryParams
 import com.devdk.aniinfo.common.Resource
 import com.devdk.aniinfo.data.remote.dto.randomAnimeDTO.RandomAnimeDTO
 import com.devdk.aniinfo.domain.repository.AnimeRepository
@@ -11,10 +12,10 @@ import java.io.IOException
 class GetAnime(
     private val repository: AnimeRepository
 ) {
-     operator fun invoke(): Flow<Resource<RandomAnimeDTO>> = flow {
+     operator fun invoke(page : Int = QueryParams.ROW_PAGE_SIZE): Flow<Resource<RandomAnimeDTO>> = flow {
         try {
             emit(Resource.Loading<RandomAnimeDTO>())
-            val dto : RandomAnimeDTO = repository.getRandomAnimeList()
+            val dto : RandomAnimeDTO = repository.getRandomAnimeList(page)
             emit(Resource.Success<RandomAnimeDTO>(dto))
         }
         catch (e : HttpException){

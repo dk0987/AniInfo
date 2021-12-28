@@ -6,7 +6,7 @@ object Genres {
         "Adventure",
         "Comedy",
         "Drama",
-        "Ecchi",
+        "Ninja",
         "Fantasy",
     )
      val genresRow2 = listOf(
@@ -14,7 +14,7 @@ object Genres {
         "Psychological",
         "Romance",
         "Sci-Fi",
-        "Nudity",
+        "Monster Girl",
         "Sports",
         "Supernatural",
         "Thriller",

@@ -9,8 +9,6 @@ import com.devdk.aniinfo.data.remote.dto.animeListDTO.toAnimeModal
 import com.devdk.aniinfo.data.remote.dto.randomAnimeDTO.toAnimeModal
 import com.devdk.aniinfo.domain.useCases.GetAnime
 import com.devdk.aniinfo.domain.useCases.GetAnimeGenre1
-import com.devdk.aniinfo.domain.useCases.GetAnimeGenre2
-import com.devdk.aniinfo.domain.useCases.GetAnimeGenre3
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,8 +18,6 @@ import javax.inject.Inject
 class HomePageViewModel @Inject constructor(
     private val getAnime: GetAnime,
     private val genre1: GetAnimeGenre1,
-    private val genre2: GetAnimeGenre2,
-    private val genre3: GetAnimeGenre3,
 ) : ViewModel() {
 
     private val _states = mutableStateOf(States())
@@ -29,9 +25,9 @@ class HomePageViewModel @Inject constructor(
 
     init {
         getRandomAnime()
-        getGenreRow1(states.value.selectedGenreRow1)
-        getGenreRow2(states.value.selectedGenreRow2)
-        getGenreRow3(states.value.selectedGenreRow3)
+        getAnimeForGenre1(states.value.selectedGenreRow1)
+        getAnimeForGenre2(states.value.selectedGenreRow2)
+        getAnimeForGenre3(states.value.selectedGenreRow3)
     }
 
     fun onEvent(event: Event){
@@ -40,25 +36,25 @@ class HomePageViewModel @Inject constructor(
                 _states.value = states.value.copy(
                     selectedGenreRow1 = event.genre
                 )
-                getGenreRow1(states.value.selectedGenreRow1)
+                getAnimeForGenre1(states.value.selectedGenreRow1)
             }
             is Event.GenreRow2ButtonClick -> {
                 _states.value = states.value.copy(
                     selectedGenreRow2 = event.genre
                 )
-                getGenreRow2(states.value.selectedGenreRow2)
+                getAnimeForGenre2(states.value.selectedGenreRow2)
             }
             is Event.GenreRow3ButtonClick -> {
                 _states.value = states.value.copy(
                     selectedGenreRow3 = event.genre
                 )
-                getGenreRow3(states.value.selectedGenreRow3)
+                getAnimeForGenre3(states.value.selectedGenreRow3)
             }
         }
     }
 
     private fun getRandomAnime() {
-            getAnime.invoke().onEach { resource ->
+            getAnime.invoke(10).onEach { resource ->
                 when (resource) {
                     is Resource.Success -> {
                         _states.value = states.value.copy(
@@ -78,7 +74,7 @@ class HomePageViewModel @Inject constructor(
                     is Resource.Error -> {
                         _states.value = states.value.copy(
                             error = resource.message.toString(),
-                            isLoadingRow3 = false
+                            isLoadingRandom = false
                         )
                     }
                 }
@@ -86,7 +82,7 @@ class HomePageViewModel @Inject constructor(
     }
 
 
-       private fun getGenreRow1(genre: String) {
+       private fun getAnimeForGenre1(genre: String) {
             genre1.invoke(genre).onEach { resource ->
                 when (resource) {
                     is Resource.Success -> {
@@ -107,66 +103,66 @@ class HomePageViewModel @Inject constructor(
                     is Resource.Error -> {
                         _states.value = states.value.copy(
                             error = resource.message.toString(),
-                            isLoadingRow3 = false
+                            isLoadingRow1 = false
                         )
                     }
                 }
             }.launchIn(viewModelScope)
         }
 
-       private fun getGenreRow2(genre : String){
-            genre2.invoke(genre).onEach { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        _states.value = states.value.copy(
-                            genreRow2 = resource.data?.data?.documents?.let {
-                                it.map { Document ->
-                                    Document.toAnimeModal()
-                                }
-                            } ?: emptyList(),
-                            isLoadingRow2 = false
-                        )
-                    }
-                    is Resource.Loading -> {
-                        _states.value = states.value.copy(
-                            isLoadingRow2 = true
-                        )
-                    }
-                    is Resource.Error -> {
-                        _states.value = states.value.copy(
-                            error = resource.message.toString(),
-                            isLoadingRow3 = false
-                        )
-                    }
+    private fun getAnimeForGenre2(genre: String) {
+        genre1.invoke(genre).onEach { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    _states.value = states.value.copy(
+                        genreRow2 = resource.data?.data?.documents?.let {
+                            it.map { Document ->
+                                Document.toAnimeModal()
+                            }
+                        } ?: emptyList(),
+                        isLoadingRow2 = false
+                    )
                 }
-            }.launchIn(viewModelScope)
-        }
+                is Resource.Loading -> {
+                    _states.value = states.value.copy(
+                        isLoadingRow2 = true
+                    )
+                }
+                is Resource.Error -> {
+                    _states.value = states.value.copy(
+                        error = resource.message.toString(),
+                        isLoadingRow2 = false
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
 
-        private  fun getGenreRow3(genre: String) {
-            genre3.invoke(genre).onEach { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        _states.value = states.value.copy(
-                            genreRow3 = resource.data?.data?.documents?.let {
-                                it.map { Document ->
-                                    Document.toAnimeModal()
-                                }
-                            } ?: emptyList(),
-                            isLoadingRow3 = false
-                        )
-                    }
-                    is Resource.Loading -> {
-                        _states.value = states.value.copy(
-                            isLoadingRow3 = true
-                        )
-                    }
-                    is Resource.Error -> {
-                        _states.value = states.value.copy(
-                            error = resource.message.toString(),
-                            isLoadingRow3 = false
-                        )
-                    }
+    private fun getAnimeForGenre3(genre: String) {
+        genre1.invoke(genre).onEach { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    _states.value = states.value.copy(
+                        genreRow3 = resource.data?.data?.documents?.let {
+                            it.map { Document ->
+                                Document.toAnimeModal()
+                            }
+                        } ?: emptyList(),
+                        isLoadingRow3 = false
+                    )
                 }
-            }.launchIn(viewModelScope)
-        }
+                is Resource.Loading -> {
+                    _states.value = states.value.copy(
+                        isLoadingRow3 = true
+                    )
+                }
+                is Resource.Error -> {
+                    _states.value = states.value.copy(
+                        error = resource.message.toString(),
+                        isLoadingRow3 = false
+                    )
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
     }

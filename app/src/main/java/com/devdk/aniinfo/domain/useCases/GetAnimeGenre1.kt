@@ -14,7 +14,7 @@ class GetAnimeGenre1(
      operator fun invoke (genre : String) : Flow<Resource<AnimeListDTO>> = flow{
         try {
             emit(Resource.Loading<AnimeListDTO>())
-            val dto : AnimeListDTO = repository.getAnimeForGenreRow1(genre)
+            val dto : AnimeListDTO = repository.getAnimeForGenre(genre)
             emit(Resource.Success<AnimeListDTO>(dto))
         }
         catch (e : HttpException){

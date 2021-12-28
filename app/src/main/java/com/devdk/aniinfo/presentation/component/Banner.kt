@@ -24,7 +24,9 @@ fun Banner(
     cornerShape: Dp = 20.dp,
     elevation : Dp = 20.dp,
     Onclick : () -> Unit = {},
+    isBanner : Boolean,
 ) {
+
     Card(
         onClick = Onclick,
         modifier = modifier
@@ -32,14 +34,28 @@ fun Banner(
             .height(200.dp)
             .padding(10.dp),
         elevation = elevation,
-        shape = RoundedCornerShape(cornerShape)
+        shape = RoundedCornerShape(cornerShape),
     ) {
+        if (!isBanner){
+            Box(modifier = Modifier
+                .fillMaxSize()
+            ){
+                Image(
+                    painter = painter,
+                    contentDescription = "Banner",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize(),
+                    alpha = 0.5f
+                )
+            }
+        }
         Box(modifier = Modifier
-            .fillMaxSize()){
+            .fillMaxSize()
+        ){
             Image(
                 painter = painter,
                 contentDescription = "Banner",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier.fillMaxSize()
             )
         }

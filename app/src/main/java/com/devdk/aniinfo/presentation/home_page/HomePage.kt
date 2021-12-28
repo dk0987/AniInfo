@@ -2,8 +2,8 @@ package com.devdk.aniinfo.presentation.home_page
 
 import android.content.SharedPreferences
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement.End
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -20,6 +20,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -132,6 +133,7 @@ fun HomePage(
                             Banner(
                                 painter = painterResource(id = R.drawable.download),
                                 cornerShape = 12.dp,
+                                isBanner = true ,
                             )
                         }
                     }
@@ -158,7 +160,8 @@ fun HomePage(
                                         Routes.DetailScreen.screen
                                                 +"?id=${state.randomAnime[currentPage].id}"
                                     )
-                                }
+                                },
+                                isBanner = state.randomAnime[currentPage].bannerImageURL != null ,
                             )
                         }
                         Spacer(modifier = Modifier.height(Size.small))
@@ -169,7 +172,9 @@ fun HomePage(
                         )
                     }
                     Spacer(modifier = Modifier.height(Size.small))
-                    LazyRow{
+                    LazyRow(
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
                         items(Genres.genresRow1){ genre ->
                             Buttons(text = genre , OnClick = {
                                 viewModel.onEvent(
@@ -179,6 +184,18 @@ fun HomePage(
                                 )
                             })
                         }
+                        item {
+                            Text(
+                                text = stringResource(id = R.string.see_more),
+                                color = MaterialTheme.colors.onBackground  ,
+                                fontWeight = FontWeight.SemiBold ,
+                                fontSize = 18.sp ,
+                                textDecoration = TextDecoration.Underline,
+                                modifier = Modifier.clickable {
+                                    navController.navigate(Routes.Recommended.screen)
+                                }
+                            )
+                        }
                     }
                     LazyRow{
                         if (state.isLoadingRow1 || state.error.isNotEmpty()){
@@ -186,6 +203,7 @@ fun HomePage(
                                 Box(modifier = Modifier.shimmer()){
                                     AnimeCard(
                                         painter = rememberImagePainter(R.drawable.download),
+                                        isBanner = false
                                     )
                                 }
                             }
@@ -202,12 +220,15 @@ fun HomePage(
                                             Routes.DetailScreen.screen
                                                     +"?id=${genre.id}"
                                         )
-                                    }
+                                    },
+                                    isBanner = genre.bannerImageURL != null
                                 )
                             }
                         }
                     }
-                    LazyRow{
+                    LazyRow(
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
                         items(Genres.genresRow2){ genre ->
                             Buttons(text = genre , OnClick = {
                                 viewModel.onEvent(
@@ -217,13 +238,28 @@ fun HomePage(
                                 )
                             })
                         }
+                        item {
+                            Text(
+                                text = stringResource(id = R.string.see_more),
+                                color = MaterialTheme.colors.onBackground ,
+                                fontWeight = FontWeight.SemiBold ,
+                                fontSize = 18.sp ,
+                                textDecoration = TextDecoration.Underline ,
+                                modifier = Modifier.clickable {
+                                    navController.navigate(Routes.Recommended.screen)
+                                }
+                            )
+                        }
                     }
-                    LazyRow{
+                    LazyRow(
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
                         if (state.isLoadingRow2 || state.error.isNotEmpty()){
                             items(QueryParams.ROW_PAGE_SIZE){
                                 Box(modifier = Modifier.shimmer()){
                                     AnimeCard(
                                         painter = rememberImagePainter(R.drawable.download),
+                                        isBanner = false
                                     )
                                 }
                             }
@@ -239,12 +275,15 @@ fun HomePage(
                                         navController.navigate(
                                         Routes.DetailScreen.screen
                                                 +"?id=${genre.id}"
-                                    )}
+                                    )},
+                                    isBanner = genre.bannerImageURL != null
                                 )
                             }
                         }
                     }
-                    LazyRow{
+                    LazyRow(
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
                         items(Genres.genresRow3){ genre ->
                             Buttons(text = genre , OnClick = {
                                 viewModel.onEvent(
@@ -254,6 +293,18 @@ fun HomePage(
                                 )
                             })
                         }
+                        item {
+                            Text(
+                                text = stringResource(id = R.string.see_more),
+                                color = MaterialTheme.colors.onBackground  ,
+                                fontWeight = FontWeight.SemiBold ,
+                                fontSize = 18.sp ,
+                                textDecoration = TextDecoration.Underline,
+                                modifier = Modifier.clickable {
+                                    navController.navigate(Routes.Recommended.screen)
+                                }
+                            )
+                        }
                     }
                     LazyRow{
                         if (state.isLoadingRow3 || state.error.isNotEmpty()){
@@ -261,6 +312,7 @@ fun HomePage(
                                 Box(modifier = Modifier.shimmer()){
                                     AnimeCard(
                                         painter = rememberImagePainter(R.drawable.download),
+                                        isBanner = false
                                     )
                                 }
                             }
@@ -277,7 +329,8 @@ fun HomePage(
                                             Routes.DetailScreen.screen
                                                     +"?id=${genre.id}"
                                         )
-                                    }
+                                    },
+                                    isBanner = genre.bannerImageURL != null
                                 )
                             }
                         }
